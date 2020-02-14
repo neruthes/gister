@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html data-edit-stamp="101">
+<head>
+	<meta charset="utf-8" />
+	<title>Gister</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" href="/neruthes.ico">
+	<link rel="apple-touch-icon" href="/neruthes.png">
+
+	<script type="text/javascript">
+	var parsedQueryParam = (function () {
+		var tmpArr = location.search.slice(1).split('&').map(x => x.split('='));
+		var tmpObj = {};
+		tmpArr.map(x => tmpObj[x[0]]=x[1]);
+		return tmpObj;
+	})();
+	var debug = function (msg) {
+		if (parsedQueryParam.debug === 'yes') {
+			console.log('Debug Stamp:', msg);
+		};
+	};
+	</script>
+
+	<script src="/gister/js/markdown-it.min.js" crossorigin="anonymous"></script>
+	<!-- <script src="/js/markdown-it.min.js" crossorigin="anonymous"></script> -->
+	<!-- Source: https://github.com/markdown-it/markdown-it -->
+
+	<style type="text/css">
+	* {
+		text-rendering: optimizeLegibility;
+		box-sizing: border-box;
+	}
+	body {
+		font-family: -apple-system, 'SF Pro Text', 'Helvetica Neue', 'Helvetica', 'Open Sans', 'Ubuntu', 'Arial', sans-serif, 'PingFang SC', '.PingFang SC', 'Noto Sans CJK SC', 'Source Han Sans CN', 'Hiragino Sans GB', 'YuGothic', 'Heiti SC';
+		font-weight: 400;
+		font-size: 18px;
+		color: #777;
+		line-height: 32px;
+		background: #F0F0F0;
+		min-height: 100vh;
+		padding: 0;
+		margin: 0;
+	}
+	.cont {
+		box-sizing: border-box;
+		padding: 30px 0;
+		margin: 0 0;
+		overflow: auto;
+	}
+	@media screen and (max-width: 768px) {
+		.cont > * {
+			padding: 30px 15px 20px;
+			margin: 0 auto;
+		}
+	}
+	@media screen and (min-width: 769px) {
+		.cont > * {
+			max-width: 804px;
+			padding: 20px 0px;
+			margin: 0 auto;
+		}
+	}
+	.header-type-alpha {
+		font-family: 'Source Code Pro', 'Menlo', monospace;
+		font-size: 14px;
+		font-weight: 400;
+		color: #000;
+		line-height: 20px;
+	}
+	.header-type-alpha a {
+		color: inherit;
+		text-decoration: underline;
+	}
+	.header-type-alpha a:hover {
+		color: #000;
+	}
+	#text {
+		font-family: 'Noto Serif', 'Source Serif Pro', 'Iowan Old Style', 'Charter', 'Georgia', 'Times New Roman', serif, 'Noto Serif SC', 'PingFang SC', 'Noto Sans CJK SC', 'Source Han Sans CN', 'Hiragino Sans GB', 'YuGothic', 'Heiti SC';
+		font-weight: 400;
+		font-size: 18px;
+		color: #000;
+		line-height: 32px;
+		background: none;
+		width: 100%;
+		box-sizing: border-box;
+		border: none;
+		outline: none;
+		overflow: auto;
+		resize: none;
+	}
+	#text h1,
+	#text h2,
+	#text h3,
+	#text h4,
+	#text h5,
+	#text h6 {
+		line-height: 1.3em;
+	}
+	#text > * {
+		margin: 1em 0;
+	}
+	#text hr {
+		background: #000;
+		border: none;
+		width: 42%;
+		height: 1px;
+		margin: 32px auto;
+	}
+	#text a {
+		color: #06E;
+		text-decoration: none;
+	}
+	#text > pre,
+	#text > pre *,
+	#text > code,
+	#text > code * {
+		font-family: 'Source Code Pro', 'Consolas', 'Menlo', 'Ubuntu Mono', monospace;
+		background: #F5F5F5;
+		border-radius: 6px;
+	}
+	#text > pre {
+		padding: 8px 16px;
+	}
+	#text p code {
+		padding: 1px 4px;
+	}
+	#text > :first-child {
+		margin-top: 0 !important;
+	}
+	footer {
+		font-size: 14px;
+		line-height: 20px;
+		color: #777;
+	}
+	footer > div {
+		margin: 0 0 10px;
+	}
+	footer a {
+		color: inherit;
+	}
+	</style>
+	<style media="screen">
+	/* Deco: bracket */
+	#text a[data-deco="bracket"]::before { content: "[ "; }
+	#text a[data-deco="bracket"]::after { content: " ]"; }
+	/* Deco: underline */
+	#text a[data-deco="undeline"] {
+		text-decoration: underline;
+	}
+	</style>
+	<script type="text/javascript">
+	</script>
+</head>
+<body>
+	<script type="text/javascript">
+	// Detect CJK
+	(function () {
+		if (parsedQueryParam.cjk === 'yes') {
+			var tag = document.createElement('link');
+			tag.setAttribute('href', 'https://fonts.googleapis.com/css?family=Noto+Serif+SC:400,600&display=swap&subset=chinese-simplified');
+			tag.setAttribute('rel', 'stylesheet');
+			document.head.appendChild(tag);
+		};
+	})();
+	</script>
+
+	<div class="cont" style="background: #FFF;">
+		<div class="header-type-alpha" id="js-section-filepath">
+			<div id="js-section-filepath-inner">
+			</div>
+		</div>
+		<div id="text">
+		</div>
+	</div>
+	<div class="cont">
+		<footer>
+			<div class="">
+				&copy; <span id="author-profile"></span> document content.
+			</div>
+			<div class="">
+				&copy; <a target="_top" href="https://neruthes.xyz/">Neruthes</a> 2019<script>document.write((function (d) { return d.getFullYear() == '2019' ? '' : '-' + d.getFullYear()})(new Date()))</script> Gister service software. <a target="_top" href="https://github.com/neruthes/Gister">Source code</a> is published under <a target="_blank" href="https://www.gnu.org/licenses/agpl-3.0.html">GNU AGPL v3</a>.
+			</div>
+			<div class="">
+				This document is available here becuase it is public on &lt;gist.github.com&gt;. If you, as the copyright owner of this document or as an eligible delegate of the copyright owner of this document, wish to unpublish this document, please contact &lt;github.com&gt;.
+			</div>
+		</footer>
+		<script type="text/javascript">
+		if (parsedQueryParam.u && parsedQueryParam.g && parsedQueryParam.f) {
+			document.title = parsedQueryParam.f + ' - Gister';
+			document.querySelector('#author-profile').innerHTML = `User <a target="_top" href="https://github.com/${parsedQueryParam.u}">@${parsedQueryParam.u}</a> on GitHub`;
+			(function () {
+	            window.xhr = new XMLHttpRequest();
+            	xhr.open('get', `https://gist.githubusercontent.com/${parsedQueryParam.u}/${parsedQueryParam.g}/raw/${parsedQueryParam.f}?t=${Date.now()}`);
+	            xhr.onload = function (e) {
+					console.log(e);
+					if (e.target.status <= 304) {
+						// Write content
+		            	var md = window.markdownit();
+						var textElement = document.querySelector('#text');
+						if (window.selectionRangeEnabled || location.search.match(/[?&]plain=yes/)) {
+							var pureText = document.createElement('pre');
+							pureText.textContent = xhr.responseText.split('\n').slice(window.selectionRange[0], window.selectionRange[1]).join('\n');
+							textElement.appendChild(pureText);
+						} else {
+							textElement.innerHTML = md.render(xhr.responseText);
+						};
+
+						// Update title
+						if (document.querySelectorAll('h1').length !== 0) {
+							// If any specified title in document
+							document.title = document.querySelectorAll('h1')[0].innerText + ' - Gister';
+						};
+						// Update footer
+						document.querySelector('#js-section-filepath-inner').innerHTML = `This is the online preview of:<br /><a id="anchor-js-section-filepath" target="_blank" href="https://gist.github.com/${parsedQueryParam.u}/${parsedQueryParam.g}">${parsedQueryParam.u}/${parsedQueryParam.g}</a>`;
+					} else {
+						document.title = '404 Not Found';
+						document.body.innerHTML = `<h1>404 Not Found</h1>
+						<p>See <a href="https://github.com/neruthes/gister">github.com/neruthes/gister</a> for user manual.</p>`;
+					}
+	            };
+	            xhr.send();
+	        })();
+		} else {
+			window.addEventListner('load', function () {
+				setTimeout(function () {
+					document.body.innerHTML = `<h1>Gister by Neruthes</h1>
+					<p>See <a href="https://github.com/neruthes/gister">github.com/neruthes/gister</a> for user manual.</p>`;
+				}, 123);
+			});
+		};
+		</script>
+	</div>
+	<script type="text/javascript">
+	window.setInterval(function () {
+		document.querySelectorAll('#text a:not([target="_top"])').forEach(function (node) {
+			node.setAttribute('target', '_top');
+		});
+	}, 400);
+	</script>
+</body>
+</html>
