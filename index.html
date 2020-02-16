@@ -21,7 +21,8 @@
 	};
 	</script>
 
-	<script src="/gister/js/markdown-it.min.js" crossorigin="anonymous"></script>
+	<!-- <script src="/gister/js/markdown-it.min.js" crossorigin="anonymous"></script> -->
+	<script src="/js/markdown-it.min.js" crossorigin="anonymous"></script>
 	<!-- Source: https://github.com/markdown-it/markdown-it -->
 
 	<style type="text/css">
@@ -44,7 +45,7 @@
 		box-sizing: border-box;
 		padding: 30px 0;
 		margin: 0 0;
-		overflow: auto;
+		overflow: hidden;
 	}
 	@media screen and (max-width: 768px) {
 		.cont > * {
@@ -84,7 +85,7 @@
 		box-sizing: border-box;
 		border: none;
 		outline: none;
-		overflow: auto;
+		overflow: hidden;
 		resize: none;
 	}
 	#text h1,
@@ -113,14 +114,15 @@
 	#text > pre *,
 	#text > code,
 	#text > code * {
-		font-size: 18px;
+		font-size: 16px;
 		font-family: 'Source Code Pro', 'Consolas', 'Menlo', 'Ubuntu Mono', monospace;
+		line-height: 24px;
 		background: #F5F5F5;
 		border-radius: 6px;
 	}
 	#text > pre {
 		padding: 8px 16px;
-		overflow-x: overflow
+		overflow-x: scroll;
 	}
 	#text p code {
 		padding: 1px 4px;
@@ -199,11 +201,18 @@
 		            	var md = window.markdownit();
 						var textElement = document.querySelector('#text');
 						if (window.selectionRangeEnabled || location.search.match(/[?&]plain=yes/)) {
+							// Plain text
 							var pureText = document.createElement('pre');
 							pureText.textContent = xhr.responseText.split('\n').slice(window.selectionRange[0], window.selectionRange[1]).join('\n');
 							textElement.appendChild(pureText);
 						} else {
+							// Real Markdown
 							textElement.innerHTML = md.render(xhr.responseText);
+							document.querySelectorAll('#text a').forEach(function (x) {
+								if (x.innerHTML.match(/\//) && x.innerHTML.indexOf(' ') === -1) {
+									x.style.lineBreak = 'anywhere';
+								};
+							})
 						};
 
 						// Update title
