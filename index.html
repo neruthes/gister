@@ -21,7 +21,6 @@
 	};
 	</script>
 
-	<!-- <script src="/gister/js/markdown-it.min.js" crossorigin="anonymous"></script> -->
 	<script src="./js/markdown-it.min.js" crossorigin="anonymous"></script>
 	<!-- Source: https://github.com/markdown-it/markdown-it -->
 
@@ -219,7 +218,7 @@
 							window.tagCount = {
 							};
 							hierarchyOrder.map(tagName => tagCount[tagName] = -1);
-							var headingIdModifierFunctionGenerator = function (node) {
+							var headingIdModifier = function (node) {
 								var tagName = node.tagName.toLowerCase();
 								tagCount[tagName] += 1;
 								var nodeId = {
@@ -231,7 +230,6 @@
 									h6: `H-a${tagCount.h1}b${tagCount.h2}c${tagCount.h3}d${tagCount.h4}e${tagCount.h5}f${tagCount.h6}`,
 									p:  `P-a${tagCount.h1}b${tagCount.h2}c${tagCount.h3}d${tagCount.h4}e${tagCount.h5}f${tagCount.h6}p${tagCount.p}`
 								};
-
 								node.setAttribute('id', nodeId[tagName]);
 								if (tagName.match(/^h[1-6]$/)) {
 									node.innerHTML = `<a href="#${nodeId[tagName]}" style="color: inherit;">${node.innerText.trim()}</a>`;
@@ -244,7 +242,7 @@
 									});
 								};
 							};
-							document.querySelectorAll('#text h1, #text h2, #text h3, #text h4, #text h5, #text h6, #text p').forEach(headingIdModifierFunctionGenerator);
+							document.querySelectorAll('#text h1, #text h2, #text h3, #text h4, #text h5, #text h6, #text p').forEach(headingIdModifier);
 							// Navigate to specified heading
 							(function () {
 								setTimeout(function () {
