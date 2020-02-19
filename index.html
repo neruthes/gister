@@ -24,6 +24,38 @@
 	<script src="./js/markdown-it.min.js" crossorigin="anonymous"></script>
 	<!-- Source: https://github.com/markdown-it/markdown-it -->
 
+	<style media="screen" data-style-for="text-font-last-resort">
+	#text {
+		font-family: 'Noto Serif', 'Source Serif Pro', 'Iowan Old Style', 'Charter', 'Georgia', 'Times New Roman', serif, 'Noto Serif SC', 'PingFang SC', 'Noto Sans CJK SC', 'Source Han Sans CN', 'Hiragino Sans GB', 'YuGothic', 'Heiti SC';
+	}
+	</style>
+	<style data-style-for="text-font" data-text-font-for="s">
+	#text > * { font-family: 'Noto Serif', 'Source Serif Pro', 'Iowan Old Style', 'Charter', 'Georgia', 'Times New Roman', serif, 'Noto Serif SC', 'PingFang SC', 'Noto Sans CJK SC', 'Source Han Sans CN', 'Hiragino Sans GB', 'YuGothic', 'Heiti SC'; }
+	</style>
+	<style data-style-for="text-font" data-text-font-for="ss">
+	#text > * { font-family: -apple-system, 'SF Pro Text', 'Helvetica Neue', 'Helvetica', 'Segoe UI', 'Open Sans', 'Arial', sans-serif, 'PingFang SC', 'Noto Sans CJK SC', 'Source Han Sans CN', 'Hiragino Sans GB', 'Hiragino Sans', 'Heiti SC', 'Microsoft YaHei', 'Microsoft YaHei UI'; }
+	</style>
+	<style data-style-for="text-font" data-text-font-for="m">
+	#text > * { font-family: 'Source Code Pro', 'Consolas', 'Inconsolata', 'Menlo', 'Courier New', monospace; }
+	</style>
+	<script type="text/javascript">
+	if (parsedQueryParam.font) {
+		if ('s ss m'.split(' ').indexOf(parsedQueryParam.font) !== -1) { // Valid input
+			document.querySelectorAll('[data-style-for="text-font"]').forEach(node => {
+				if (node.getAttribute('data-text-font-for') !== parsedQueryParam.font) {
+					node.remove();
+				};
+			});
+			document.querySelector('[data-style-for="text-font-last-resort"]').remove();
+		} else {
+			document.querySelectorAll('[data-style-for="text-font"][data-text-font-for]').forEach(x => x.remove());
+		};
+	} else {
+		document.querySelectorAll('[data-style-for="text-font"][data-text-font-for]').forEach(x => x.remove());
+	};
+	</script>
+
+
 	<style type="text/css">
 	* {
 		text-rendering: optimizeLegibility;
@@ -74,7 +106,6 @@
 		color: #000;
 	}
 	#text {
-		font-family: 'Noto Serif', 'Source Serif Pro', 'Iowan Old Style', 'Charter', 'Georgia', 'Times New Roman', serif, 'Noto Serif SC', 'PingFang SC', 'Noto Sans CJK SC', 'Source Han Sans CN', 'Hiragino Sans GB', 'YuGothic', 'Heiti SC';
 		font-weight: 400;
 		font-size: 18px;
 		color: #000;
@@ -109,10 +140,10 @@
 		color: #06E;
 		text-decoration: none;
 	}
-	#text > pre,
-	#text > pre *,
-	#text > code,
-	#text > code * {
+	#text pre,
+	#text pre *,
+	#text p code,
+	#text p code * {
 		font-size: 16px;
 		font-family: 'Source Code Pro', 'Consolas', 'Menlo', 'Ubuntu Mono', monospace;
 		line-height: 24px;
@@ -214,12 +245,14 @@
 								};
 							});
 							// Modify <h1> <h2> <h3> tags
-							var hierarchyOrder = [ 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p'];
-							window.tagCount = {
-							};
-							hierarchyOrder.map(tagName => tagCount[tagName] = -1);
+							window.tagCount = {};
+							var hierarchyOrder = 'h1 h2 h3 h4 h5 h6 p'.split(' ');
+							hierarchyOrder.map(tagName => tagCount[tagName] = 0);
 							var headingIdModifier = function (node) {
 								var tagName = node.tagName.toLowerCase();
+								if ('blockquote pre hr'.split(' ').indexOf(tagName) !== -1) { // Normalized tagName to "p"
+									tagName = 'p';
+								};
 								tagCount[tagName] += 1;
 								var nodeId = {
 									h1: `H-a${tagCount.h1}`,
@@ -242,11 +275,14 @@
 									});
 								};
 							};
-							document.querySelectorAll('#text h1, #text h2, #text h3, #text h4, #text h5, #text h6, #text p').forEach(headingIdModifier);
+							document.querySelectorAll('#text > *').forEach(headingIdModifier);
 							// Navigate to specified heading
 							(function () {
 								setTimeout(function () {
-									if (location.hash.length > 3 && 1) {
+									if (location.hash.match(/[\?\&\=]/)) {
+										return 1;
+									};
+									if (document.getElementById(location.hash.slice(1))) {
 										window.scrollTo(0, document.querySelector(location.hash).offsetTop-15);
 										console.log(document.querySelector(location.hash).offsetTop);
 									}
