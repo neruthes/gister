@@ -11,7 +11,7 @@
 	<!-- Source: https://github.com/markdown-it/markdown-it -->
 
 	<script type="text/javascript">
-	if (location.hostname !== 'gister.now.sh') {
+	if (location.hostname !== 'gister.now.sh' && location.hostname !== 'localhost') {
 		location.href = location.href.replace(location.hostname, 'gister.now.sh');
 	};
 	</script>
@@ -180,6 +180,23 @@
 	}
 	</style>
 	<style media="screen">
+	.error-page {
+		color: #000;
+		text-align: center;
+		background: #FFF;
+		height: 105vh;
+	}
+	.error-page > div {
+		color: #000;
+		text-align: center;
+		background: #FFF;
+		max-width: 600px;
+		height: 105vh;
+		padding: 30px 20px;
+		margin: 0 auto;
+	}
+	</style>
+	<style media="screen">
 	/* Deco: bracket */
 	#text a[data-deco="bracket"]::before { content: "[ "; }
 	#text a[data-deco="bracket"]::after { content: " ]"; }
@@ -320,19 +337,18 @@
 						document.querySelector('#js-section-filepath-inner').innerHTML = `This is the online preview of:<br /><a id="anchor-js-section-filepath" target="_blank" href="https://gist.github.com/${parsedQueryParam.u}/${parsedQueryParam.g}">${parsedQueryParam.u}/${parsedQueryParam.g}</a>`;
 					} else {
 						document.title = '404 Not Found';
-						document.body.innerHTML = `<h1>404 Not Found</h1>
-						<p>See <a href="https://github.com/neruthes/gister">github.com/neruthes/gister</a> for user manual.</p>`;
+						document.body.innerHTML = `<div class="error-page">
+							<div>
+								<h1>404 Not Found</h1>
+								<p>See <a href="https://github.com/neruthes/gister">github.com/neruthes/gister</a> for user manual.</p>
+							</div>
+						</div>`;
 					}
 	            };
 	            xhr.send();
 	        })();
 		} else {
-			window.addEventListener('load', function () {
-				setTimeout(function () {
-					document.body.innerHTML = `<h1>Gister by Neruthes</h1>
-					<p>See <a href="https://github.com/neruthes/gister">github.com/neruthes/gister</a> for user manual.</p>`;
-				}, 123);
-			});
+			location.href = 'https://github.com/neruthes/gister';
 		};
 		</script>
 	</div>
