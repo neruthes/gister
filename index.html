@@ -323,14 +323,11 @@
 								};
 							};
 							document.querySelectorAll('#text > *').forEach(headingIdModifier);
-							// Navigate to specified heading
+							// Navigate to specified element
 							(function () {
 								setTimeout(function () {
-									if (location.hash.match(/[\?\&\=]/)) {
-										return 1;
-									};
 									if (document.getElementById(location.hash.slice(1))) {
-										window.scrollTo(0, document.querySelector(location.hash).offsetTop-15);
+										window.scrollTo(0, document.querySelector(location.hash).offsetTop-30);
 										console.log(document.querySelector(location.hash).offsetTop);
 									}
 								}, 1);
