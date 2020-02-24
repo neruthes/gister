@@ -255,6 +255,15 @@
 			</div>
 		</footer>
 		<script type="text/javascript">
+		var error404 = function () {
+			document.title = '404 Not Found';
+			document.body.innerHTML = `<div class="error-page">
+				<div>
+					<h1>404 Not Found</h1>
+					<p>See <a href="https://github.com/neruthes/gister">github.com/neruthes/gister</a> for user manual.</p>
+				</div>
+			</div>`;
+		}
 		if (parsedQueryParam.u && parsedQueryParam.g && parsedQueryParam.f) {
 			document.title = parsedQueryParam.f + ' - Gister';
 			document.querySelector('#author-profile').innerHTML = `User <a target="_top" href="https://github.com/${parsedQueryParam.u}">@${parsedQueryParam.u}</a> on GitHub`;
@@ -336,14 +345,8 @@
 						// Update footer
 						document.querySelector('#js-section-filepath-inner').innerHTML = `This is the online preview of:<br /><a id="anchor-js-section-filepath" target="_blank" href="https://gist.github.com/${parsedQueryParam.u}/${parsedQueryParam.g}">${parsedQueryParam.u}/${parsedQueryParam.g}</a>`;
 					} else {
-						document.title = '404 Not Found';
-						document.body.innerHTML = `<div class="error-page">
-							<div>
-								<h1>404 Not Found</h1>
-								<p>See <a href="https://github.com/neruthes/gister">github.com/neruthes/gister</a> for user manual.</p>
-							</div>
-						</div>`;
-					}
+						error404();
+					};
 	            };
 	            xhr.send();
 	        })();

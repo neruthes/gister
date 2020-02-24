@@ -3,8 +3,13 @@
 ## Use
 
 ```
-https://neruthes.xyz/gister/?u=${GITHUB_USERNAME}&g=${GIST_ID}&f=${FILE_NAME}
+https://gister.now.sh/?u=${GITHUB_USERNAME}&g=${GIST_ID}&f=${FILE_NAME}
 ```
+
+Alternative URL prefixes include:
+
+- `https://neruthes.xyz/gister/`
+- `https://neruthes.github.io/gister/`
 
 ## Special Features
 
