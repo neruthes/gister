@@ -255,6 +255,34 @@
 			</div>
 		</footer>
 		<script type="text/javascript">
+		var scrollToElement = function (node) {
+            var _scroll_to_tmp = node.offsetTop-1;
+            (new Array(25)).fill((_scroll_to_tmp-pageYOffset)/25).map(function (x, i) {
+                setTimeout(function () {
+                    scrollBy(0, Math.floor(x));
+                }, i*15);
+            });
+            setTimeout(function () {
+                scrollTo(0, _scroll_to_tmp);
+            }, 25*15);
+        };
+		var trackReadingProgress = function (specifiedElementId) {
+			if (specifiedElementId) {
+				(new Array(40)).fill(1).map(function (x, i) {
+					setTimeout(function () {
+						window.history.replaceState(null, document.title, '#'+specifiedElementId);
+					}, 10);
+				});
+			};
+            var tags = document.querySelectorAll('#js-Article > *');
+            for (var i = 0; i < tags.length; i++) {
+                if (tags[i].offsetTop > pageYOffset) {
+                    console.log('#'+tags[i].id);
+                    window.history.replaceState(null, document.title, '#'+tags[i].id);
+                    return 0;
+                };
+            };
+        };
 		var error404 = function () {
 			document.title = '404 Not Found';
 			document.body.innerHTML = `<div class="error-page">
@@ -315,7 +343,7 @@
 								};
 								node.setAttribute('id', nodeId[tagName]);
 								if (tagName.match(/^h[1-6]$/)) {
-									node.innerHTML = `<a href="#${nodeId[tagName]}" style="color: inherit;">${node.innerText.trim()}</a>`;
+									node.innerHTML = `<span data-scroll-to="${nodeId[tagName]}" style="color: inherit;">${node.innerText.trim()}</span>`;
 								};
 
 								// Reset counts of lower ranks
@@ -326,25 +354,22 @@
 								};
 							};
 							document.querySelectorAll('#text > *').forEach(headingIdModifier);
+							document.querySelectorAll('#text [data-scroll-to]').forEach(function (node) {
+				                node.addEventListener('click', function (e) {
+				                    trackReadingProgress(e.target.getAttribute('data-scroll-to'));
+				                    scrollToElement(document.querySelector('#'+e.target.getAttribute('data-scroll-to')));
+				                });
+				            });
 							// Navigate to specified element
 							(function () {
 								setTimeout(function () {
 									if (document.getElementById(location.hash.slice(1))) {
-										window.scrollTo(0, document.querySelector(location.hash).offsetTop-30);
-										console.log(document.querySelector(location.hash).offsetTop);
+										window.scrollTo(0, document.querySelector(location.hash).offsetTop-1);
 									}
 								}, 1);
 							})();
 							// Realtime update reading progress
-				            window.setInterval(function () {
-				                var tags = document.querySelectorAll('#text > *');
-				                for (var i = 0; i < tags.length; i++) {
-				                    if (tags[i].offsetTop > pageYOffset) {
-				                        window.history.replaceState(null, document.title, '#'+tags[i].id);
-				                        return 0;
-				                    };
-				                };
-				            }, 1000);
+				            window.setInterval(trackReadingProgress, 2000);
 						};
 
 						// Update title
