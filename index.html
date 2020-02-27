@@ -310,7 +310,7 @@
 									h6: `H-a${tagCount.h1}b${tagCount.h2}c${tagCount.h3}d${tagCount.h4}e${tagCount.h5}f${tagCount.h6}`,
 									p:  `P-a${tagCount.h1}b${tagCount.h2}c${tagCount.h3}d${tagCount.h4}e${tagCount.h5}f${tagCount.h6}p${tagCount.p}`
 								};
-								if (!nodeId) {
+								if (!nodeId[tagName]) {
 									return 1;
 								};
 								node.setAttribute('id', nodeId[tagName]);
@@ -340,7 +340,7 @@
 				                var tags = document.querySelectorAll('#text > *');
 				                for (var i = 0; i < tags.length; i++) {
 				                    if (tags[i].offsetTop > pageYOffset) {
-				                        window.history.pushState(tags[i].id, document.title+' (#'+tags[i].id+')', '#'+tags[i].id)
+				                        window.history.replaceState(null, document.title, '#'+tags[i].id);
 				                        return 0;
 				                    };
 				                };
